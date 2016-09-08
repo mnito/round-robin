@@ -3,7 +3,7 @@ include_once '../src/round_robin.php';
 
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
 
-$schedule = schedule($teams, (($temp = count($teams)) % 2 === 0 ? $temp - 1 : $temp) * 2);
+$schedule = schedule($teams, (($count = count($teams)) % 2 === 0 ? $count - 1 : $count) * 2);
 
 ?>
 <!DOCTYPE html>
