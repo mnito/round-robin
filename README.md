@@ -69,4 +69,5 @@ MIT License
 ## Author
 
 Michael P. Nitowski <[mpnitowski@gmail.com](mailto:mpnitowski@gmail.com)>
-    (Twitter: [@mikenitowski](https://twitter.com/mikenitowski))
+    (Twitter: [@mikenitowski](https://twitter.com/mikenitowski),
+     Web: [mnito.co](http://mnito.co))
