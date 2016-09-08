@@ -1,6 +1,6 @@
 {
     "name": "mnito/round_robin",
-    "description": "Round-robin schedule generation library for PHP",
+    "description": "Round-robin schedule generation implementation in PHP",
     "keywords": ["round-robin", "round", "robin", "schedule", "generation"],
     "homepage": "https://github.com/mnito/round-robin",
     "type": "library",

@@ -1,6 +1,6 @@
 <?php
 /**
- * Round-robin schedule generation library
+ * Round-robin schedule generation implementation
  * 
  * @author Michael P. Nitowski <mpnitowski@gmail.com>
  * 
