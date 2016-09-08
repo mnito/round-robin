@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit 
-    bootstrap="src/round_robin.php"
+    bootstrap="src/round-robin.php"
     colors="true"
     convertErrorsToExceptions="true"
     convertNoticesToExceptions="true"
