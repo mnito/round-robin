@@ -1,5 +1,5 @@
 <?php
-include_once '../src/round_robin.php';
+include_once '../src/round-robin.php';
 
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
 
