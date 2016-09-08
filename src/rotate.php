@@ -45,7 +45,7 @@ function rotate(array &$items)
      * factor differentiation included to have intuitive behavior for arrays 
      * with an odd number of elements
      */
-    $factor = (int) $itemCount % 2 === 0 ? $itemCount / 2 : ($itemCount / 2) + 1;
+    $factor = (int) ($itemCount % 2 === 0 ? $itemCount / 2 : ($itemCount / 2) + 1);
     $topRightIndex = $factor - 1;
     $topRightItem = $items[$topRightIndex];
     $bottomLeftIndex = $factor;
