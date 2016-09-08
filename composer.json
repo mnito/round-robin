@@ -1,5 +1,5 @@
 {
-    "name": "mnito/round_robin",
+    "name": "mnito/round-robin",
     "description": "Round-robin schedule generation implementation in PHP",
     "keywords": ["round-robin", "round", "robin", "schedule", "generation"],
     "homepage": "https://github.com/mnito/round-robin",
@@ -18,6 +18,6 @@
         "phpunit/phpunit": "5.5.*"
     },
     "autoload": {
-        "files": ["src/round_robin.php"]
+        "files": ["src/round-robin.php"]
     }
 }
