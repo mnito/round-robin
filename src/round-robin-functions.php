@@ -27,6 +27,5 @@
  * SOFTWARE.
  */
 
-require_once 'round-robin-functions.php';
-require_once 'objects/ScheduleBuilder.php';
-require_once 'objects/Schedule.php';
+require_once 'functions/rotate.php';
+require_once 'functions/make_schedule.php';
