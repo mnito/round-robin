@@ -117,7 +117,7 @@ class Schedule implements IteratorAggregate
         if(empty($this->team)) {
             $this->makeTeam();
         }
-        return array_keys($this->team);
+        return array_filter(array_keys($this->team));
     }
 
     /**
