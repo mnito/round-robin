@@ -94,12 +94,22 @@ class ScheduleBuilder
     /**
      * Set number of rounds to generate
      * 
-     * @param int $rounds
+     * @param int|null $rounds
      * @return void
      */
-    public function setRounds(int $rounds)
+    public function setRounds(int $rounds = null)
     {
         $this->rounds = $rounds;
+    }
+
+    /**
+     * Set rounds to amount for each team to meet every other team
+     * 
+     * @return void
+     */
+    public function enoughRounds()
+    {
+        $this->setRounds(null);
     }
 
     /**
