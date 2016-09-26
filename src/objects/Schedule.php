@@ -86,8 +86,8 @@ class Schedule implements IteratorAggregate
             foreach($matchups as $matchup) {
                 $team1 = $matchup[0];
                 $team2 = $matchup[1];
-                $teamSchedule[$team1][$round] = $team2;
-                $teamSchedule[$team2][$round] = $team1;
+                $teamSchedule[$team1][$round] = ['team' => $team2, 'home' => false];
+                $teamSchedule[$team2][$round] = ['team' => $team1, 'home' => true];
             }
         }
         $this->team = $teamSchedule;
@@ -131,7 +131,7 @@ class Schedule implements IteratorAggregate
         if(!is_null($team)) {
             return $this->forTeam($team);
         }
-        return $this->master;
+        return $this->master();
     }
 
     /**
@@ -143,7 +143,7 @@ class Schedule implements IteratorAggregate
      */
     final public function getIterator(): Iterator
     {
-        return new ArrayIterator($this->get());
+        return new ArrayIterator($this->master());
     }
 
     /**
