@@ -2,13 +2,15 @@
 
 use PHPUnit\Framework\TestCase;
 
-class ScheduleTest extends TestCase
+class HighLevelTest extends TestCase
 {
     public function testArbitrarySchedule()
     {
+        $scheduleBuilder = new ScheduleBuilder();
         $teams = range(0, 9);
         $teamSchedules = [];
-        $schedule = schedule($teams);
+        $scheduleBuilder->setTeams($teams);
+        $schedule = $scheduleBuilder->build();
         foreach($schedule as $round) {
             $roundTeams = [];
             foreach($round as $matchup) {
@@ -37,12 +39,18 @@ class ScheduleTest extends TestCase
 
     public function testByeAddition()
     {
-        $teams = ['Team 1', 'Team 2', 'Team 3'];
-        $schedule = schedule($teams, null, false);
+        $scheduleBuilder = new ScheduleBuilder();
+        $scheduleBuilder->addTeam('Team 1');
+        $scheduleBuilder->addTeam('Team 2');
+        $scheduleBuilder->addTeam('Team 3');
+        $scheduleBuilder->doNotShuffle();
+        $schedule = $scheduleBuilder->build();
         //Make sure initial array wasn't changed
+        $teams = $schedule->teams();
+        sort($teams);
         $this->assertEquals(['Team 1', 'Team 2', 'Team 3'], $teams);
         $singleNullCount = 0;
-        foreach($schedule as $round) {
+        foreach($schedule->get() as $round) {
             foreach($round as $matchup) {
                 //xor to make sure only a single element is null
                 if(is_null($matchup[0]) xor is_null($matchup[1])) {
@@ -55,12 +63,15 @@ class ScheduleTest extends TestCase
 
     public function testDefaultScheduleRoundCount()
     {
+        $scheduleBuilder = new ScheduleBuilder();
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
-        $schedule = schedule($teams);
+        $scheduleBuilder->setTeams($teams);
+        $schedule = $scheduleBuilder->build()->master();
         $this->assertCount(3, $schedule);
         $teams2 = range(1, 11);
         array_walk($teams2, function(&$value) { $value = 'Team '.$value; });
-        $schedule2 = schedule($teams2);
+        $scheduleBuilder->setTeams($teams2);
+        $schedule2 = $scheduleBuilder->build();
         $this->assertCount(11, $schedule2);
     }
 
@@ -68,7 +79,9 @@ class ScheduleTest extends TestCase
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
         $factor = ($temp = count($teams) % 2 === 0) ? $temp - 1 : $temp;
-        $schedule = schedule($teams, $factor * 2);
+        $scheduleBuilder = new ScheduleBuilder();
+        $scheduleBuilder->setRounds($factor * 2);
+        $schedule = $scheduleBuilder->build();
         for($i = 1; $i < $factor; $i += 1) {
             $initial = $schedule[$i];
             $opposite = $schedule[$i + $factor];
@@ -79,31 +92,10 @@ class ScheduleTest extends TestCase
         }
     }
 
-    public function testManualSeeding()
-    {
-        $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4', 'Team 5', 'Team 6', 'Team 7'];
-        $schedule1 = schedule($teams, 18, true, 89);
-        $schedule2 = schedule($teams, 18, true, 89);
-        $this->assertEquals($schedule1, $schedule2);
-        $schedule3 = schedule($teams, null, true, 44);
-        $schedule4 = schedule($teams, null, true, 44);
-        $this->assertEquals($schedule3, $schedule4);
-    }
-
-    public function testNoShuffle()
-    {
-        $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
-        $schedule1 = schedule($teams, null, false);
-        $schedule2 = schedule($teams, null, false);
-        $this->assertEquals($schedule1, $schedule2);
-        $schedule3 = schedule($teams, 2, false);
-        $schedule4 = schedule($teams, 2, false);
-        $this->assertEquals($schedule3, $schedule4);
-    }
-
     public function testNoTeams()
     {
-        $this->assertEmpty(schedule([]));
+        $scheduleBuilder = new ScheduleBuilder();
+        $this->assertEmpty($scheduleBuilder->build()->master());
     }
 
     public function testRoundMatchupCount()
@@ -122,14 +114,26 @@ class ScheduleTest extends TestCase
 
     public function testSingleTeam()
     {
-        $this->assertEmpty(schedule(['Team 1']));
+        $scheduleBuilder = new ScheduleBuilder();
+        $scheduleBuilder->addTeam('Team 1');
+        $this->assertEmpty($scheduleBuilder->build()->get());
+    }
+
+    public function testZeroRounds()
+    {
+        $scheduleBuilder = new ScheduleBuilder();
+        $scheduleBuilder->setTeams(['Team 1', 'Team 2', 'Team 3']);
+        $scheduleBuilder->setRounds(0);
+        $this->assertEmpty($scheduleBuilder->build()->master());
     }
 
     public function testWraparound()
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
         $factor = ($temp = count($teams) % 2 === 0) ? $temp - 1 : $temp;
-        $schedule = schedule($teams, $factor * 3);
+        $scheduleBuilder = new ScheduleBuilder();
+        $scheduleBuilder->setRounds($factor * 3);
+        $schedule = $scheduleBuilder->build();
         for($i = 1; $i < $factor; $i += 1) {
             $initial = $schedule[$i];
             $opposite = $schedule[$i + $factor * 2];
