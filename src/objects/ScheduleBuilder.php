@@ -53,6 +53,18 @@ class ScheduleBuilder
     protected $seed = null;
 
     /**
+     * Set teams and rounds at construction
+     * 
+     * @param array $teams
+     * @param int|null $rounds
+     */
+    public function __construct(array $teams = [], int $rounds = null)
+    {
+        $this->setTeams($teams);
+        $this->setRounds($rounds);
+    }
+
+    /**
      * Set teams
      * 
      * @param array $teams
