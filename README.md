@@ -24,7 +24,7 @@ Round-robin schedule generation reference implementation for PHP 7 licensed unde
 ```php
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
 $scheduleBuilder = new ScheduleBuilder($teams);
-$scheduleBuilder->build();
+$schedule = $scheduleBuilder->build();
 ```
 
 or
@@ -84,18 +84,27 @@ $schedule = schedule($teams, null, true, 89);
 ### Looping Through A Schedule
 
 #### Looping Through the Master Schedule
+
+Setup:
+
 ```php
 <?php
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
 $schedule = schedule($teams, null, true, 89);
-//OR
+```
+
+or
+
+```php
 $scheduleBuilder = new ScheduleBuilder();
 $scheduleBuilder->setTeams($teams);
 $scheduleBuilder->setRounds(10);
 $scheduleBuilder->doNotShuffle();
 $schedule = $scheduleBuilder->build();
+```
 ?>
 
+```php
 <?php foreach($schedule as $round => $matchups){ ?>
     <h3>Round <?=$round?></h3>
     <ul>
@@ -111,8 +120,6 @@ $schedule = $scheduleBuilder->build();
 <?php
 
 $scheduleBuilder = new ScheduleBuilder($teams, 10);
-$scheduleBuilder->setTeams($teams);
-$scheduleBuilder->setRounds(10);
 $scheduleBuilder->shuffle(18);
 $schedule = $scheduleBuilder->build();
 ?>
