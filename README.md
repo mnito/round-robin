@@ -88,7 +88,6 @@ $schedule = schedule($teams, null, true, 89);
 Setup:
 
 ```php
-<?php
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
 $schedule = schedule($teams, null, true, 89);
 ```
@@ -101,7 +100,6 @@ $scheduleBuilder->setTeams($teams);
 $scheduleBuilder->setRounds(10);
 $scheduleBuilder->doNotShuffle();
 $schedule = $scheduleBuilder->build();
-?>
 ```
 
 Loop through:
