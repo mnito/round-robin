@@ -16,7 +16,6 @@ Round-robin schedule generation reference implementation for PHP 7 licensed unde
 
 ## Basic Usage
 
-
 ### Generating Common Schedules
 
 #### Generate a random schedule where each player meets every other player once:
@@ -134,8 +133,6 @@ $schedule = $scheduleBuilder->build();
     </ol>
 <?php } ?>
 ```
-
-###
 
 ## License
 
