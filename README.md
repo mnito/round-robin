@@ -101,8 +101,10 @@ $scheduleBuilder->setTeams($teams);
 $scheduleBuilder->setRounds(10);
 $scheduleBuilder->doNotShuffle();
 $schedule = $scheduleBuilder->build();
-```
 ?>
+```
+
+Loop through:
 
 ```php
 <?php foreach($schedule as $round => $matchups){ ?>
