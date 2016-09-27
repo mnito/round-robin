@@ -12,6 +12,7 @@ Round-robin schedule generation reference implementation for PHP 7 licensed unde
 - Unit tested
 - Documented
 - Modern PHP 7 code
+- Object-oriented and procedural APIs
 
 ## Basic Usage
 
@@ -22,9 +23,25 @@ Generate a random schedule where each player meets every other player once:
 ```php
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
 $schedule = schedule($teams);
+
+or
+
+```php
+$teams = ['The 1st', '2 Good', 'We 3', '4ward'];
+$scheduleBuilder = new ScheduleBuilder($teams);
+$scheduleBuilder->build();
 ```
 
 Generate a random home-away schedule where each player meets every other player twice, once at home and once away, using the $rounds integer parameter:
+
+```php
+$teams = ['The 1st', '2 Good', 'We 3', '4ward'];
+$scheduleBuilder = new ScheduleBuilder($teams, $rounds);
+$schedule = $scheduleBuilder->build();
+```
+
+or
+
 ```php
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
 $rounds = (($count = count($teams)) % 2 === 0 ? $count - 1 : $count) * 2;
@@ -36,18 +53,42 @@ Generate a schedule without randomly shuffling the teams using the $shuffle bool
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
 $schedule = schedule($teams, null, false);
 ```
+or
+
+```php
+$teams = ['The 1st', '2 Good', 'We 3', '4ward'];
+$scheduleBuilder = new ScheduleBuilder($teams);
+$scheduleBuilder->doNotShuffle();
+$schedule = $scheduleBuilder->build();
+```
 
 Use your own seed with the $seed integer parameter for predetermined shuffling:
+```php
+$teams = ['The 1st', '2 Good', 'We 3', '4ward'];
+$scheduleBuilder = new ScheduleBuilder($teams);
+$scheduleBuilder->shuffle(89);
+$schedule = $scheduleBuilder->build();
+```
+or
+
 ```php
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
 $schedule = schedule($teams, null, true, 89);
 ```
 
 ### Looping Through A Schedule
+
+#### Looping Through the Master Schedule
 ```php
 <?php
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
 $schedule = schedule($teams, null, true, 89);
+//OR
+$scheduleBuilder = new ScheduleBuilder();
+$scheduleBuilder->setTeams($teams);
+$scheduleBuilder->setRounds(10);
+$scheduleBuilder->doNotShuffle();
+$schedule = $scheduleBuilder->build();
 ?>
 
 <?php foreach($schedule as $round => $matchups){ ?>
@@ -57,6 +98,28 @@ $schedule = schedule($teams, null, true, 89);
         <li><?=$matchup[0] ?? '*BYE*'?> vs. <?=$matchup[1] ?? '*BYE*'?></li>
     <?php } ?>
     </ul>
+<?php } ?>
+```
+
+#### Looping Through Team Schedules
+```php
+<?php
+
+$scheduleBuilder = new ScheduleBuilder($teams, 10);
+$scheduleBuilder->setTeams($teams);
+$scheduleBuilder->setRounds(10);
+$scheduleBuilder->shuffle(18);
+$schedule = $scheduleBuilder->build();
+?>
+
+
+<?php foreach($teams as $team) { ?>
+    <h3><?=$team?></h3>
+    <ol>
+    <?php foreach($schedule($team) as $contest) { ?>
+        <li><?=(($contest['home'] ? '' : '@').($contest['team'] ?? '*BYE*'))?></li>
+    <?php } ?>
+    </ol>
 <?php } ?>
 ```
 
