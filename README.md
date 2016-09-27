@@ -19,12 +19,7 @@ Round-robin schedule generation reference implementation for PHP 7 licensed unde
 
 ### Generating Common Schedules
 
-Generate a random schedule where each player meets every other player once:
-```php
-$teams = ['The 1st', '2 Good', 'We 3', '4ward'];
-$schedule = schedule($teams);
-
-or
+#### Generate a random schedule where each player meets every other player once:
 
 ```php
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
@@ -32,7 +27,15 @@ $scheduleBuilder = new ScheduleBuilder($teams);
 $scheduleBuilder->build();
 ```
 
-Generate a random home-away schedule where each player meets every other player twice, once at home and once away, using the $rounds integer parameter:
+or
+
+```php
+$teams = ['The 1st', '2 Good', 'We 3', '4ward'];
+$schedule = schedule($teams);
+```
+
+
+#### Generate a random home-away schedule where each player meets every other player twice, once at home and once away, using the $rounds integer parameter:
 
 ```php
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
@@ -48,12 +51,7 @@ $rounds = (($count = count($teams)) % 2 === 0 ? $count - 1 : $count) * 2;
 $schedule = schedule($teams, $rounds);
 ```
 
-Generate a schedule without randomly shuffling the teams using the $shuffle boolean parameter:
-```php
-$teams = ['The 1st', '2 Good', 'We 3', '4ward'];
-$schedule = schedule($teams, null, false);
-```
-or
+#### Generate a schedule without randomly shuffling the teams using the $shuffle boolean parameter:
 
 ```php
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
@@ -62,7 +60,14 @@ $scheduleBuilder->doNotShuffle();
 $schedule = $scheduleBuilder->build();
 ```
 
-Use your own seed with the $seed integer parameter for predetermined shuffling:
+or
+
+```php
+$teams = ['The 1st', '2 Good', 'We 3', '4ward'];
+$schedule = schedule($teams, null, false);
+```
+
+#### Use your own seed with the $seed integer parameter for predetermined shuffling:
 ```php
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
 $scheduleBuilder = new ScheduleBuilder($teams);
