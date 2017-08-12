@@ -67,7 +67,7 @@ class MakeScheduleTest extends TestCase
     public function testHomeAwaySchedule()
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
-        $factor = ($temp = count($teams) % 2 === 0) ? $temp - 1 : $temp;
+        $factor = (($count = count($teams)) % 2 === 0 ? $count - 1 : $count);
         $schedule = make_schedule($teams, $factor * 2);
         for($i = 1; $i < $factor; $i += 1) {
             $initial = $schedule[$i];
@@ -133,7 +133,7 @@ class MakeScheduleTest extends TestCase
     public function testWraparound()
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
-        $factor = ($temp = count($teams) % 2 === 0) ? $temp - 1 : $temp;
+        $factor = (($count = count($teams)) % 2 === 0 ? $count - 1 : $count);
         $schedule = make_schedule($teams, $factor * 3);
         for($i = 1; $i < $factor; $i += 1) {
             $initial = $schedule[$i];

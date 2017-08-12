@@ -78,10 +78,10 @@ class HighLevelTest extends TestCase
     public function testHomeAwaySchedule()
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
-        $factor = ($temp = count($teams) % 2 === 0) ? $temp - 1 : $temp;
-        $scheduleBuilder = new ScheduleBuilder();
+        $factor = (($count = count($teams)) % 2 === 0 ? $count - 1 : $count);
+        $scheduleBuilder = new ScheduleBuilder($teams);
         $scheduleBuilder->setRounds($factor * 2);
-        $schedule = $scheduleBuilder->build();
+        $schedule = $scheduleBuilder->build()->getIterator();
         for($i = 1; $i < $factor; $i += 1) {
             $initial = $schedule[$i];
             $opposite = $schedule[$i + $factor];
@@ -130,10 +130,10 @@ class HighLevelTest extends TestCase
     public function testWraparound()
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
-        $factor = ($temp = count($teams) % 2 === 0) ? $temp - 1 : $temp;
-        $scheduleBuilder = new ScheduleBuilder();
+        $factor = (($count = count($teams)) % 2 === 0 ? $count - 1 : $count);
+        $scheduleBuilder = new ScheduleBuilder($teams);
         $scheduleBuilder->setRounds($factor * 3);
-        $schedule = $scheduleBuilder->build();
+        $schedule = $scheduleBuilder->build()->get();
         for($i = 1; $i < $factor; $i += 1) {
             $initial = $schedule[$i];
             $opposite = $schedule[$i + $factor * 2];

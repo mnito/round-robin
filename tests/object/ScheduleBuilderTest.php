@@ -66,6 +66,7 @@ class ScheduleBuilderTest extends TestCase
             $scheduleBuilder->removeTeam('Team 2');
             $this->fail('Removal of nonexistent team failed to throw an exception.');
         } catch (Exception $e) {}
+        $this->assertTrue(true);
     }
 
     public function testRounds()

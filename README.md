@@ -38,6 +38,7 @@ $schedule = schedule($teams);
 
 ```php
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
+$rounds = (($count = count($teams)) % 2 === 0 ? $count - 1 : $count) * 2;
 $scheduleBuilder = new ScheduleBuilder($teams, $rounds);
 $schedule = $scheduleBuilder->build();
 ```

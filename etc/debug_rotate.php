@@ -1,6 +1,6 @@
 <?php
 
-include '../src/rotate.php';
+include '../src/round-robin.php';
 
 function debug_rotate_print(array $array)
 {
