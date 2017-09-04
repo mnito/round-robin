@@ -2,4 +2,6 @@ language: php
 php:
     - 7.0
     - nightly
-script: php phpunit-6.3.phar --configuration core/tests/phpunit.xml
+script:
+    wget https://phar.phpunit.de/phpunit-6.3.phar
+    php phpunit-6.3.phar --configuration core/tests/phpunit.xml
