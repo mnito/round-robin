@@ -81,7 +81,11 @@ if(!(array_key_exists('t', $options) || array_key_exists('teams', $options))) {
 }
 
 $teams = array_map('trim', explode(',', $options['teams'] ?? $options['t']));
-$rounds = (int) ($options['rounds'] ?? $options['r'] ?? count($teams));
+$rounds = $options['rounds'] ?? $options['r'];
+if($rounds != NULL) {
+    $rounds = (int) $rounds;
+}
+
 $shuffle = array_key_exists('s', $options)
     || array_key_exists('shuffle', $options);
 $seed = $options['i'] ?? $options['seed'] ?? NULL;
