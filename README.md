@@ -141,6 +141,4 @@ MIT License
 
 ## Author
 
-Michael P. Nitowski <[mpnitowski@gmail.com](mailto:mpnitowski@gmail.com)>
-    (Twitter: [@mikenitowski](https://twitter.com/mikenitowski),
-     Web: [mnito.co](http://mnito.co))
+Michael P. Nitowski <[mike@nitow.ski](mailto:mike@nitow.ski)>
