@@ -81,7 +81,7 @@ if(!(array_key_exists('t', $options) || array_key_exists('teams', $options))) {
 }
 
 $teams = array_map('trim', explode(',', $options['teams'] ?? $options['t']));
-$rounds = $options['rounds'] ?? $options['r'];
+$rounds = $options['rounds'] ?? $options['r'] ?? NULL;
 if($rounds != NULL) {
     $rounds = (int) $rounds;
 }
