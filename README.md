@@ -83,7 +83,7 @@ $schedule = schedule($teams, null, true, 89);
 
 ### Looping Through A Schedule
 
-#### Looping Through the Master Schedule
+#### Looping Through the Full Schedule
 
 Setup:
 

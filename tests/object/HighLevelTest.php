@@ -66,7 +66,7 @@ class HighLevelTest extends TestCase
         $scheduleBuilder = new ScheduleBuilder();
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
         $scheduleBuilder->setTeams($teams);
-        $schedule = $scheduleBuilder->build()->master();
+        $schedule = $scheduleBuilder->build()->full();
         $this->assertCount(3, $schedule);
         $teams2 = range(1, 11);
         array_walk($teams2, function(&$value) { $value = 'Team '.$value; });
@@ -95,7 +95,7 @@ class HighLevelTest extends TestCase
     public function testNoTeams()
     {
         $scheduleBuilder = new ScheduleBuilder();
-        $this->assertEmpty($scheduleBuilder->build()->master());
+        $this->assertEmpty($scheduleBuilder->build()->full());
     }
 
     public function testRoundMatchupCount()
@@ -124,7 +124,7 @@ class HighLevelTest extends TestCase
         $scheduleBuilder = new ScheduleBuilder();
         $scheduleBuilder->setTeams(['Team 1', 'Team 2', 'Team 3']);
         $scheduleBuilder->setRounds(0);
-        $this->assertEmpty($scheduleBuilder->build()->master());
+        $this->assertEmpty($scheduleBuilder->build()->full());
     }
 
     public function testWraparound()

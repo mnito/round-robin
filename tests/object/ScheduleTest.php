@@ -4,20 +4,20 @@ use \PHPUnit\Framework\TestCase;
 
 class ScheduleTest extends TestCase
 {
-    public function testMasterScheduleEquivalency()
+    public function testFullScheduleEquivalency()
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
         $scheduleBuilder = new ScheduleBuilder();
         $scheduleBuilder->setTeams($teams);
         $scheduleBuilder->doNotShuffle();
         $schedule = $scheduleBuilder->build();
-        $this->assertEquals($schedule->master(), $schedule->get());
-        $this->assertEquals($schedule->master(), $schedule());
+        $this->assertEquals($schedule->full(), $schedule->get());
+        $this->assertEquals($schedule->full(), $schedule());
         $scheduleArray = [];
         foreach($schedule as $round => $matchups) {
             $scheduleArray[$round] = $matchups;
         }
-        $this->assertEquals($schedule->master(), $scheduleArray);
+        $this->assertEquals($schedule->full(), $scheduleArray);
     }
 
     public function testIndividualScheduleEquivalency()
@@ -50,7 +50,7 @@ class ScheduleTest extends TestCase
 
     public function testIndividualSchedule2()
     {
-        $master = [
+        $full = [
             1 => [['Team 1', 'Team 2'], [null, 'Team 3']],
             2 => [['Team 2', null], ['Team 3', 'Team 1']]
         ];
@@ -58,7 +58,7 @@ class ScheduleTest extends TestCase
             1 => ['team' => 'Team 1', 'home' => true],
             2=> ['team' => null, 'home' => false]
         ];
-        $schedule = new Schedule($master);
+        $schedule = new Schedule($full);
         $this->assertEquals($expected, $schedule->forTeam('Team 2'));
     }
 }

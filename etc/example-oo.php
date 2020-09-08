@@ -22,7 +22,7 @@ $schedule = $scheduleBuilder->build();
             This example generates a determinate schedule where each contestant meets each 
             other twice, once home and once away.
         </p>
-        <h2>Sample Master Schedule</h2>
+        <h2>Sample Full Schedule</h2>
         <?php foreach($schedule as $round => $matchups){ ?>
         <h3>Round <?=$round?></h3>
         <ul>

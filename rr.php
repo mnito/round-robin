@@ -109,7 +109,7 @@ if($description) {
     echo wordwrap($description . EOL . EOL, 75, EOL);
 }
 
-echo '## Master Schedule' . EOL . EOL;
+echo '## Full Schedule' . EOL . EOL;
 
 foreach($schedule as $round => $matchups) {
     echo '### Round ' . $round  . EOL;
