@@ -123,6 +123,12 @@
 
             lzma.compress(schedule, 9, result => window.location.hash = Base64.fromUint8Array(Uint8Array.from(result), true));
         };
+
+        window.onhashchange = e => {
+            if (window.location.hash === "") {
+                window.location.reload();
+            }
+        };
     </script>
   </body>
 </html>
