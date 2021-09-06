@@ -1,5 +1,5 @@
 # round-robin
-[![Build Status](https://app.travis-ci.com/mnito/round-robin.svg?branch=main)](https://travis-ci.org/mnito/round-robin)
+[![Build Status](https://app.travis-ci.com/mnito/round-robin.svg)](https://app.travis-ci.com/mnito/round-robin.svg)
 
 Round-robin schedule generation reference implementation for PHP 7 licensed under the MIT license
 

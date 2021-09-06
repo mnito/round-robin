@@ -1,7 +1,7 @@
 language: php
 php:
-    - 8.0
-    - 7.0
+    - 8
+    - 7
     - nightly
 script:
     - wget https://phar.phpunit.de/phpunit-9.5.phar
