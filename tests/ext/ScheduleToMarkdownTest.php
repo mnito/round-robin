@@ -2,7 +2,7 @@
 
 use \PHPUnit\Framework\TestCase;
 
-class ToMarkdownTest extends TestCase
+class ScheduleToMarkdownTest extends TestCase
 {
     private function getSchedule(): Schedule
     {
