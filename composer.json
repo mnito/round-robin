@@ -21,6 +21,6 @@
         "files": ["src/round-robin.php"]
     },
     "archive": {
-        "exclude": ["/etc"]
+        "exclude": ["/etc", "index.html"]
     }
 }

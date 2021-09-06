@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <title>Round Robin Schedule Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/tachyons/css/tachyons.min.css">
+  <body class="pa4 black-80 system-sans-serif center w-90">
+    <div id="generator" style="display: none">
+        <h1>Round Robin Schedule Generator</h1>
+        <form id="schedule-form" name="schedule-form">
+            <div class="mb4 measure">
+                <label for="teams" class="f6 b db mb2">Teams</span></label>
+                <textarea rows="10" id="teams" name="teams" class="db border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb2" aria-describedby="teams-desc"></textarea>
+                <small id="teams-desc" class="f6 black-60">Enter each player or team name on separate lines here</a></small>
+            </div>
+            <div class="mb4 measure">
+                <label for="rounds" class="f6 b db mb2">Rounds <span class="normal black-60">(optional)</span></label>
+                <input id="rounds" class="input-reset ba b--black-20 pa2 mb2 db w-100" type="number" aria-describedby="rounds-desc">
+                <small id="rounds-desc" class="f6 black-60 db mb2">Enter the number of rounds -- defaults to the number of players or teams</small>
+            </div>
+            <div class="mb4 measure">
+                <label for="name" class="f6 b db mb2">Name <span class="normal black-60">(optional)</span></label>
+                <input id="name" class="input-reset ba b--black-20 pa2 mb2 db w-100" type="text" aria-describedby="name-desc">
+                <small id="name-desc" class="f6 black-60 db mb2">Enter a name for the schedule if desired</small>
+            </div>
+            <div class="mb4 measure">
+                <label for="description" class="f6 b db mb2">Description <span class="normal black-60">(optional)</span></span></label>
+                <textarea id="description" name="description" class="db border-box hover-black w-100 measure ba b--black-20 pa2 br2 mb2" aria-describedby="description-desc"></textarea>
+                <small id="description-desc" class="f6 black-60">Enter a description for the schedule if desired</a></small>
+            </div>
+            <div class="mb4 measure">
+                <div class="fl w-100 w-30-ns">
+                    <div class="mb4">
+                        <input class="mr2 pointer" type="checkbox" id="shuffle" value="shuffle">
+                        <label for="shuffle" class="f6 b pointer" style="user-select: none;">Shuffle</label>
+                    </div>
+                </div>
+                <div class="fl w-100 w-70-ns">
+                    <div class="mb4">
+                        <label for="shuffle-seed" class="f6 b db mb2">Shuffle Seed <span class="normal black-60">(optional)</span></label>
+                        <input id="shuffle-seed" disabled class="input-reset ba b--black-20 pa2 mb2 db w-100" type="number" aria-describedby="shuffle-seed-desc">
+                        <small id="shuffle-seed-desc" class="f6 black-60 db mb2">Enter the same number for predictable shuffles</small>
+                    </div>
+                </div>
+            </div>
+            <div class="mb4 measure">
+                <input class="f6 fr pointer grow no-underline br-pill ph3 pv2 mb2 dib white bg-dark-pink" style="border: none" type="submit" id="generate" value="Generate Schedule">
+            </div>
+        </form>
+    </div>
+    <div id="schedule"></div>
+    <script src="https://unpkg.com/lzma@2.3.2/src/lzma-min.js"></script>
+    <script src="https://unpkg.com/dompurify@2.3.1/dist/purify.min.js"></script>
+    <script src="https://unpkg.com/marked@3.0.2/marked.min.js"></script>
+    <script src="https://unpkg.com/js-base64@3.6.1/base64.js"></script>
+    <script>
+        const elem = document.getElementById.bind(document);
+        const lzma = new LZMA("https://unpkg.com/lzma@2.3.2/src/lzma_worker-min.js");
+
+        const showGenerator = () => {
+            elem('generator').style.visibility = 'visible';
+            elem('generator').style.display = 'block';
+        };
+
+        const hideGenerator = () => {
+            elem('generator').style.visibility = 'hidden';
+            elem('generator').style.display = 'none';
+        };
+
+        document.onreadystatechange = e => {
+            if (document.readyState !== "complete") {
+                return;
+            }
+            if (window.location.hash) {
+                try {
+                    lzma.decompress(
+                        Base64.toUint8Array(window.location.hash),
+                        (schedule, error) => {
+                            if (error) {
+                                showGenerator();
+                                return;
+                            }
+                            elem('schedule').innerHTML = DOMPurify.sanitize(marked(schedule));
+                        }
+                    );
+                } catch  {
+                    showGenerator();
+                }
+                return;
+            }
+            showGenerator();
+        };
+
+        elem('teams').oninput = e => {
+            elem('rounds').defaultValue = e.target.value.split('\n').filter(v => Boolean(v)).length;
+        };
+        elem('shuffle').onchange = e => {
+            elem('shuffle-seed').disabled = !e.target.checked;
+            elem('shuffle-seed').value = "";
+        };
+
+        const SCHEDULE_URL = 'https://us-east4-miken-sandbox.cloudfunctions.net/round-robin-schedule';
+        elem('schedule-form').onsubmit = async e => {
+            e.preventDefault();
+            e.stopPropagation();
+            const response = await fetch(SCHEDULE_URL + '?' + new URLSearchParams({
+                teams: elem('teams').value.split('\n').filter(v => Boolean(v)),
+                rounds: elem('rounds').value || elem('rounds').defaultValue,
+                name: elem('name').value,
+                description: elem('description').value,
+                shuffle: elem('shuffle').checked,
+                shuffle_seed: elem('shuffle').checked ? elem('shuffle-seed').value : ''
+            }));
+
+            if (response.status !== 200) {
+                alert(await response.text());
+                return;
+            }
+
+            hideGenerator();
+
+            const schedule = await response.text();
+            elem('schedule').innerHTML = DOMPurify.sanitize(marked(schedule));
+
+            lzma.compress(schedule, 9, result => window.location.hash = Base64.fromUint8Array(Uint8Array.from(result), true));
+        };
+    </script>
+  </body>
+</html>

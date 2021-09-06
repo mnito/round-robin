@@ -1,0 +1,16 @@
+{
+    "require": {
+        "google/cloud-functions-framework": "^0.7",
+        "mnito/round-robin": "^2.1"
+    },
+    "require-dev": {
+        "slim/slim": "4.*",
+        "slim/psr7": "1.4.*"
+    },
+    "scripts": {
+        "start": [
+           "Composer\\Config::disableProcessTimeout",
+           "FUNCTION_TARGET=get_schedule php -S localhost:${PORT:-8080} vendor/bin/router.php"
+        ]
+    }
+}
