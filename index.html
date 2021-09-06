@@ -48,13 +48,13 @@
         </form>
     </div>
     <div id="schedule"></div>
-    <script src="https://unpkg.com/lzma@2.3.2/src/lzma-min.js"></script>
+    <script src="https://unpkg.com/lzma@2.3.2/src/lzma_worker-min.js"></script>
     <script src="https://unpkg.com/dompurify@2.3.1/dist/purify.min.js"></script>
     <script src="https://unpkg.com/marked@3.0.2/marked.min.js"></script>
     <script src="https://unpkg.com/js-base64@3.6.1/base64.js"></script>
     <script>
         const elem = document.getElementById.bind(document);
-        const lzma = new LZMA("https://unpkg.com/lzma@2.3.2/src/lzma_worker-min.js");
+        const lzma = LZMA;
 
         const showGenerator = () => {
             elem('generator').style.visibility = 'visible';
