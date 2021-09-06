@@ -50,8 +50,6 @@ $help_text = <<<'TEXT'
     -h --help Display help.
 TEXT;
 
-const EOL = PHP_EOL;
-
 /* Option parsing */
 $options = getopt(
     't:r:si:n:d:gh', // Corresponds to long options
@@ -90,7 +88,7 @@ $shuffle = array_key_exists('s', $options)
     || array_key_exists('shuffle', $options);
 $seed = $options['i'] ?? $options['seed'] ?? NULL;
 
-$name = $options['name'] ?? $options['n'] ?? 'Schedule';
+$name = $options['name'] ?? $options['n'] ?? NULL;
 $description = $options['description'] ?? $options['d'] ?? NULL;
 $include_generation_details =
     array_key_exists('include-generation-details', $options)
@@ -103,40 +101,11 @@ $shuffle ? $builder->shuffle($seed) : $builder->doNotShuffle();
 $schedule = $builder->build();
 
 /* Output in markdown format */
-echo '# ' . $name . EOL . EOL;
-
-if($description) {
-    echo wordwrap($description . EOL . EOL, 75, EOL);
-}
-
-echo '## Full Schedule' . EOL . EOL;
-
-foreach($schedule as $round => $matchups) {
-    echo '### Round ' . $round  . EOL;
-    foreach($matchups as $matchup) {
-        echo '  * '
-            . ($matchup[0] ?? '_BYE_') . ' vs. ' . ($matchup[1] ?? '_BYE_')
-            . EOL;
-    }
-    echo EOL;
-}
-
-echo '## Individual Schedules' . EOL . EOL;
-
-foreach($teams as $team) {
-    echo '### ' . $team . EOL;
-    foreach($schedule($team) as $round => $contest) {
-        echo '  ' . $round . '. '
-            . ($contest['home'] ? '' : '@') . ($contest['team'] ?? '_BYE_')
-            . EOL;
-    }
-    echo EOL;
-}
-
+echo schedule_to_markdown($schedule, $name, $description);
 if($include_generation_details) {
-    echo '## Generation Details' . EOL . EOL;
+    echo '## Generation Details' . MARKDOWN_EOL . MARKDOWN_EOL;
     echo 'Datetime: ' . date('l, F j, Y g:i A', time())
-      . ' (' . gmdate('Y-m-d\TH:i:s\Z', time()) . ')' . EOL . EOL;
+      . ' (' . gmdate('Y-m-d\TH:i:s\Z', time()) . ')' . MARKDOWN_EOL . MARKDOWN_EOL;
     echo 'Platform: '
       . 'PHP ' . phpversion() . ' on '
       . implode(
@@ -144,9 +113,9 @@ if($include_generation_details) {
             // OS details
             [php_uname('s'), php_uname('r'), php_uname('v'), php_uname('m')]
         )
-      . EOL;
+      . MARKDOWN_EOL;
 
     if(!is_null($seed)) {
-      echo EOL . 'Seed: ' . $seed . EOL;
+      echo MARKDOWN_EOL . 'Seed: ' . $seed . MARKDOWN_EOL;
     }
 }
