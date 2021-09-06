@@ -47,6 +47,9 @@
             </div>
         </form>
     </div>
+    <div id="create-new-schedule" class="fr-ns mb5" style="display: none">
+        <button id="create-new-schedule-button" class="f6 fr pointer grow no-underline br-pill ph3 pv2 mb2 dib white bg-dark-pink" style="border: none">Create New Schedule</button>
+    </div>
     <div id="schedule"></div>
     <script src="https://unpkg.com/lzma@2.3.2/src/lzma_worker-min.js"></script>
     <script src="https://unpkg.com/dompurify@2.3.1/dist/purify.min.js"></script>
@@ -59,11 +62,15 @@
         const showGenerator = () => {
             elem('generator').style.visibility = 'visible';
             elem('generator').style.display = 'block';
+            elem('create-new-schedule').style.visibility = 'hidden';
+            elem('create-new-schedule').style.display = 'none';
         };
 
         const hideGenerator = () => {
             elem('generator').style.visibility = 'hidden';
             elem('generator').style.display = 'none';
+            elem('create-new-schedule').style.visibility = 'visible';
+            elem('create-new-schedule').style.display = 'block';
         };
 
         document.onreadystatechange = e => {
@@ -79,6 +86,7 @@
                                 showGenerator();
                                 return;
                             }
+                            hideGenerator();
                             elem('schedule').innerHTML = DOMPurify.sanitize(marked(schedule));
                         }
                     );
@@ -128,6 +136,10 @@
             if (window.location.hash === "") {
                 window.location.reload();
             }
+        };
+
+        elem('create-new-schedule-button').onclick = e => {
+            window.location.hash = "";  // Will reload based on the above
         };
     </script>
   </body>
