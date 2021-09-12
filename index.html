@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <title>Round Robin Schedule Generator</title>
+  <meta name="description" content="Quickly generate round robin schedules">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://unpkg.com/tachyons/css/tachyons.min.css">
   <body class="pa4 black-80 system-sans-serif center w-90">
@@ -73,6 +74,22 @@
             elem('create-new-schedule').style.display = 'block';
         };
 
+        const updateMeta = (schedule) => {
+            const scheduleLines = schedule.split('\n');
+            if (scheduleLines[0].startsWith('# ')) {
+                document.title = DOMPurify.sanitize(scheduleLines[0].substr(2));
+            }
+
+            const metaDescription = document.getElementsByTagName('meta')['description'];
+            if (!scheduleLines[0].startsWith('# ') && !scheduleLines[0].startsWith("## ")) {
+                metaDescription.content = DOMPurify.sanitize(scheduleLines[0]);
+            } else if (!scheduleLines[2].startsWith('## ') && !scheduleLines[2] == '\n') {
+                metaDescription.content = DOMPurify.sanitize(scheduleLines[2]);
+            } else {
+                metaDescription.remove();
+            }
+        };
+
         document.onreadystatechange = e => {
             if (document.readyState !== "complete") {
                 return;
@@ -87,6 +104,7 @@
                                 return;
                             }
                             hideGenerator();
+                            updateMeta(schedule);
                             elem('schedule').innerHTML = DOMPurify.sanitize(marked(schedule));
                         }
                     );
@@ -110,14 +128,21 @@
         elem('schedule-form').onsubmit = async e => {
             e.preventDefault();
             e.stopPropagation();
-            const response = await fetch(SCHEDULE_URL + '?' + new URLSearchParams({
-                teams: elem('teams').value.split('\n').filter(v => Boolean(v)),
-                rounds: elem('rounds').value || elem('rounds').defaultValue,
-                name: elem('name').value,
-                description: elem('description').value,
-                shuffle: elem('shuffle').checked,
-                shuffle_seed: elem('shuffle').checked ? elem('shuffle-seed').value : ''
-            }));
+
+            let response;
+            try {
+                response = await fetch(SCHEDULE_URL + '?' + new URLSearchParams({
+                    teams: elem('teams').value.split('\n').filter(v => Boolean(v)),
+                    rounds: elem('rounds').value || elem('rounds').defaultValue,
+                    name: elem('name').value,
+                    description: elem('description').value,
+                    shuffle: elem('shuffle').checked,
+                    shuffle_seed: elem('shuffle').checked ? elem('shuffle-seed').value : ''
+                }));
+            } catch {
+                alert("Something went wrong when trying to generate the schedule");
+                return;
+            }
 
             if (response.status !== 200) {
                 alert(await response.text());
@@ -127,6 +152,7 @@
             hideGenerator();
 
             const schedule = await response.text();
+            updateMeta(schedule);
             elem('schedule').innerHTML = DOMPurify.sanitize(marked(schedule));
 
             lzma.compress(schedule, 9, result => window.location.hash = Base64.fromUint8Array(Uint8Array.from(result), true));
