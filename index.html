@@ -2,6 +2,8 @@
 <html lang="en">
   <title>Round Robin Schedule Generator</title>
   <meta name="description" content="Quickly generate round robin schedules">
+  <meta name="og:title" content="Round Robin Schedule Generator">
+  <meta name="og:description" content="Quickly generate round robin schedules">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://unpkg.com/tachyons/css/tachyons.min.css">
   <body class="pa4 black-80 system-sans-serif center w-90">
@@ -77,16 +79,24 @@
         const updateMeta = (schedule) => {
             const scheduleLines = schedule.split('\n');
             if (scheduleLines[0].startsWith('# ')) {
-                document.title = DOMPurify.sanitize(scheduleLines[0].substr(2));
+                const title = DOMPurify.sanitize(scheduleLines[0].substr(2));
+                document.title = title;
+                document.getElementsByTagName('meta')['og:title'].content = title;
             }
 
             const metaDescription = document.getElementsByTagName('meta')['description'];
+            const metaOgDescription = document.getElementsByTagName('meta')['og:description'];
             if (!scheduleLines[0].startsWith('# ') && !scheduleLines[0].startsWith("## ")) {
-                metaDescription.content = DOMPurify.sanitize(scheduleLines[0]);
+                const description = DOMPurify.sanitize(scheduleLines[0]);
+                metaDescription.content = description;
+                metaOgDescription.content = description;
             } else if (!scheduleLines[2].startsWith('## ') && !scheduleLines[2] == '\n') {
-                metaDescription.content = DOMPurify.sanitize(scheduleLines[2]);
+                const description = DOMPurify.sanitize(scheduleLines[2]);
+                metaDescription.content = description;
+                metaOgDescription.content = description;
             } else {
                 metaDescription.remove();
+                metaOgDescription.remove();
             }
         };
 
