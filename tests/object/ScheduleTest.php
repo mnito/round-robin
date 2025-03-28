@@ -4,7 +4,7 @@ use \PHPUnit\Framework\TestCase;
 
 class ScheduleTest extends TestCase
 {
-    public function testFullScheduleEquivalency()
+    public function testFullScheduleEquivalency(): void
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
         $scheduleBuilder = new ScheduleBuilder();
@@ -20,7 +20,7 @@ class ScheduleTest extends TestCase
         $this->assertEquals($schedule->full(), $scheduleArray);
     }
 
-    public function testIndividualScheduleEquivalency()
+    public function testIndividualScheduleEquivalency(): void
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
         $scheduleBuilder = new ScheduleBuilder();
@@ -30,7 +30,7 @@ class ScheduleTest extends TestCase
         $this->assertEquals($schedule->forTeam('Team 1'), $schedule('Team 1'));
     }
 
-    public function testIndividualSchedule1()
+    public function testIndividualSchedule1(): void
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4', 'Team 5'];
         $scheduleBuilder = new ScheduleBuilder();
@@ -48,7 +48,7 @@ class ScheduleTest extends TestCase
         $this->assertEquals($teamSchedule['Team 1'], $schedule->forTeam('Team 1'));
     }
 
-    public function testIndividualSchedule2()
+    public function testIndividualSchedule2(): void
     {
         $full = [
             1 => [['Team 1', 'Team 2'], [null, 'Team 3']],

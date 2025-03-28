@@ -27,9 +27,9 @@
  * SOFTWARE.
  */
 
-require_once 'round-robin-functions.php';
-require_once 'objects/ScheduleBuilder.php';
-require_once 'objects/Schedule.php';
+require_once __DIR__ . '/round-robin-functions.php';
+require_once __DIR__ . '/objects/ScheduleBuilder.php';
+require_once __DIR__ . '/objects/Schedule.php';
 
 // Extensions
-require_once 'ext/schedule_to_markdown.php';
+require_once __DIR__ . '/ext/schedule_to_markdown.php';

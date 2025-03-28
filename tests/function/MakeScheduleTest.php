@@ -4,7 +4,7 @@ use \PHPUnit\Framework\TestCase;
 
 class MakeScheduleTest extends TestCase
 {
-    public function testArbitrarySchedule()
+    public function testArbitrarySchedule(): void
     {
         $teams = range(0, 9);
         $teamSchedules = [];
@@ -35,7 +35,7 @@ class MakeScheduleTest extends TestCase
         }
     }
 
-    public function testByeAddition()
+    public function testByeAddition(): void
     {
         $teams = ['Team 1', 'Team 2', 'Team 3'];
         $schedule = make_schedule($teams, null, false);
@@ -53,18 +53,18 @@ class MakeScheduleTest extends TestCase
         $this->assertEquals(3, $singleNullCount);
     }
 
-    public function testDefaultScheduleRoundCount()
+    public function testDefaultScheduleRoundCount(): void
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
         $schedule = make_schedule($teams);
         $this->assertCount(3, $schedule);
         $teams2 = range(1, 11);
-        array_walk($teams2, function(&$value) { $value = 'Team '.$value; });
+        array_walk($teams2, function(&$value): void { $value = 'Team '.$value; });
         $schedule2 = make_schedule($teams2);
         $this->assertCount(11, $schedule2);
     }
 
-    public function testHomeAwaySchedule()
+    public function testHomeAwaySchedule(): void
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
         $factor = (($count = count($teams)) % 2 === 0 ? $count - 1 : $count);
@@ -79,7 +79,7 @@ class MakeScheduleTest extends TestCase
         }
     }
 
-    public function testManualSeeding()
+    public function testManualSeeding(): void
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4', 'Team 5', 'Team 6', 'Team 7'];
         $schedule1 = make_schedule($teams, 18, true, 89);
@@ -90,7 +90,7 @@ class MakeScheduleTest extends TestCase
         $this->assertEquals($schedule3, $schedule4);
     }
 
-    public function testNoShuffle()
+    public function testNoShuffle(): void
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
         $schedule1 = make_schedule($teams, null, false);
@@ -101,12 +101,12 @@ class MakeScheduleTest extends TestCase
         $this->assertEquals($schedule3, $schedule4);
     }
 
-    public function testNoTeams()
+    public function testNoTeams(): void
     {
         $this->assertEmpty(make_schedule([]));
     }
 
-    public function testRoundMatchupCount()
+    public function testRoundMatchupCount(): void
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4', 'Team 5'];
         $schedule = make_schedule($teams, 14);
@@ -120,17 +120,17 @@ class MakeScheduleTest extends TestCase
         }
     }
 
-    public function testSingleTeam()
+    public function testSingleTeam(): void
     {
         $this->assertEmpty(make_schedule(['Team 1']));
     }
 
-    public function testZeroRounds()
+    public function testZeroRounds(): void
     {
         $this->assertEmpty(make_schedule(['Team 1', 'Team 2', 'Team 3'], 0));
     }
 
-    public function testWraparound()
+    public function testWraparound(): void
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
         $factor = (($count = count($teams)) % 2 === 0 ? $count - 1 : $count);

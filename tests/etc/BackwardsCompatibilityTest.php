@@ -4,7 +4,7 @@ use \PHPUnit\Framework\TestCase;
 
 class BackwardsCompatibilityTest extends TestCase
 {
-    public function testScheduleBackwardsCompatibility()
+    public function testScheduleBackwardsCompatibility(): void
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4', 'Team 5'];
         $this->assertEquals(schedule($teams, 17, false), make_schedule($teams, 17, false));

@@ -9,11 +9,10 @@ class ScheduleToMarkdownTest extends TestCase
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
         $builder = new ScheduleBuilder($teams, 2);
         $builder->doNotShuffle();
-        $schedule = $builder->build();
-        return $schedule;
+        return $builder->build();
     }
 
-    public function testFormatsToMarkdown()
+    public function testFormatsToMarkdown(): void
     {
         $schedule_markdown = schedule_to_markdown($this->getSchedule());
 
@@ -48,12 +47,11 @@ class ScheduleToMarkdownTest extends TestCase
 
 
 EOD;
-        echo $expected;
 
         $this->assertEquals($schedule_markdown, $expected);
     }
 
-    public function testFormatsToMarkdownWithNameOnly()
+    public function testFormatsToMarkdownWithNameOnly(): void
     {
         $schedule_markdown = schedule_to_markdown($this->getSchedule(), 'A Schedule');
 
@@ -90,12 +88,11 @@ EOD;
 
 
 EOD;
-        echo $expected;
 
         $this->assertEquals($schedule_markdown, $expected);
     }
 
-    public function testFormatsToMarkdownWithNameAndDescription()
+    public function testFormatsToMarkdownWithNameAndDescription(): void
     {
         $schedule_markdown = schedule_to_markdown($this->getSchedule(), $name = 'A Schedule', $description='A description');
 
@@ -134,7 +131,6 @@ A description
 
 
 EOD;
-        echo $expected;
 
         $this->assertEquals($schedule_markdown, $expected);
     }

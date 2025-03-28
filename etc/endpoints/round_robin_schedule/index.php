@@ -2,6 +2,7 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -24,23 +25,23 @@ function _error(ResponseInterface $response, int $status, string $msg)
 
 function _str_contains(string $s, $subs): bool
 {
-    return strpos($s, $subs) !== false;
+    return str_contains($s, (string) $subs);
 }
 
-function get_schedule(ServerRequestInterface $request, ResponseInterface $response = NULL): ResponseInterface
+function get_schedule(ServerRequestInterface $request, ?ResponseInterface $response = NULL): ResponseInterface
 {
-    if (empty($response)) {
-        $response = new \GuzzleHttp\Psr7\Response();
+    if (!$response instanceof ResponseInterface) {
+        $response = new Response();
     }
 
     $response = _add_access_control_headers($response);
 
     if (
         !empty($request->getHeaderLine('Accept'))
-        && !(
-            _str_contains($request->getHeaderLine('Accept'), '*/*')
-            || _str_contains($request->getHeaderLine('Accept'), 'text/markdown')
-        )
+        &&
+        !_str_contains($request->getHeaderLine('Accept'), '*/*')
+        &&
+        !_str_contains($request->getHeaderLine('Accept'), 'text/markdown')
     ) {
         return _error($response, 406, "The only supported content type is text/markdown");
     }

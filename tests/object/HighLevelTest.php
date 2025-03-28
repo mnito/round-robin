@@ -4,7 +4,7 @@ use \PHPUnit\Framework\TestCase;
 
 class HighLevelTest extends TestCase
 {
-    public function testArbitrarySchedule()
+    public function testArbitrarySchedule(): void
     {
         $scheduleBuilder = new ScheduleBuilder();
         $teams = range(0, 9);
@@ -37,7 +37,7 @@ class HighLevelTest extends TestCase
         }
     }
 
-    public function testByeAddition()
+    public function testByeAddition(): void
     {
         $scheduleBuilder = new ScheduleBuilder();
         $scheduleBuilder->addTeam('Team 1');
@@ -61,7 +61,7 @@ class HighLevelTest extends TestCase
         $this->assertEquals(3, $singleNullCount);
     }
 
-    public function testDefaultScheduleRoundCount()
+    public function testDefaultScheduleRoundCount(): void
     {
         $scheduleBuilder = new ScheduleBuilder();
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
@@ -69,13 +69,13 @@ class HighLevelTest extends TestCase
         $schedule = $scheduleBuilder->build()->full();
         $this->assertCount(3, $schedule);
         $teams2 = range(1, 11);
-        array_walk($teams2, function(&$value) { $value = 'Team '.$value; });
+        array_walk($teams2, function(&$value): void { $value = 'Team '.$value; });
         $scheduleBuilder->setTeams($teams2);
         $schedule2 = $scheduleBuilder->build();
         $this->assertCount(11, $schedule2);
     }
 
-    public function testHomeAwaySchedule()
+    public function testHomeAwaySchedule(): void
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
         $factor = (($count = count($teams)) % 2 === 0 ? $count - 1 : $count);
@@ -92,13 +92,13 @@ class HighLevelTest extends TestCase
         }
     }
 
-    public function testNoTeams()
+    public function testNoTeams(): void
     {
         $scheduleBuilder = new ScheduleBuilder();
         $this->assertEmpty($scheduleBuilder->build()->full());
     }
 
-    public function testRoundMatchupCount()
+    public function testRoundMatchupCount(): void
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4', 'Team 5'];
         $schedule = schedule($teams, 14);
@@ -112,14 +112,14 @@ class HighLevelTest extends TestCase
         }
     }
 
-    public function testSingleTeam()
+    public function testSingleTeam(): void
     {
         $scheduleBuilder = new ScheduleBuilder();
         $scheduleBuilder->addTeam('Team 1');
         $this->assertEmpty($scheduleBuilder->build()->get());
     }
 
-    public function testZeroRounds()
+    public function testZeroRounds(): void
     {
         $scheduleBuilder = new ScheduleBuilder();
         $scheduleBuilder->setTeams(['Team 1', 'Team 2', 'Team 3']);
@@ -127,7 +127,7 @@ class HighLevelTest extends TestCase
         $this->assertEmpty($scheduleBuilder->build()->full());
     }
 
-    public function testWraparound()
+    public function testWraparound(): void
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
         $factor = (($count = count($teams)) % 2 === 0 ? $count - 1 : $count);
