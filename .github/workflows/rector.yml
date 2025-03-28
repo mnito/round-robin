@@ -1,0 +1,39 @@
+name: Rector
+
+on: [ push ]
+
+env:
+  rector-cache-name: cache-rector
+
+jobs:
+  rector:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: [ '8.4' ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: composer:v2
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Rector Cache
+        uses: actions/cache@v4
+        with:
+          path: /tmp/rector
+          key: ${{ runner.os }}-rector-${{ env.rector-cache-name }}-run-${{ github.run_id }}
+          restore-keys: ${{ runner.os }}-rector-${{ env.rector-cache-name }}
+
+      - run: mkdir -p /tmp/rector
+
+      - name: Rector Dry Run
+        run: php vendor/bin/rector process --dry-run --config=rector.php

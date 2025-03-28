@@ -4,7 +4,7 @@ use \PHPUnit\Framework\TestCase;
 
 class ScheduleBuilderTest extends TestCase
 {
-    public function testManualSeeding()
+    public function testManualSeeding(): void
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4', 'Team 5', 'Team 6', 'Team 7'];
         $scheduleBuilder = new ScheduleBuilder();
@@ -16,7 +16,7 @@ class ScheduleBuilderTest extends TestCase
         $this->assertEquals($scheduleBuilder->build(), $scheduleBuilder->build());
     }
 
-    public function testNoShuffle()
+    public function testNoShuffle(): void
     {
         $teams = ['Team 1', 'Team 2', 'Team 3', 'Team 4'];
         $scheduleBuilder = new ScheduleBuilder();
@@ -31,7 +31,7 @@ class ScheduleBuilderTest extends TestCase
         $this->assertEquals($schedule3, $schedule4);
     }
 
-    public function testTeamAddition()
+    public function testTeamAddition(): void
     {
         $scheduleBuilder = new ScheduleBuilder();
         $scheduleBuilder->addTeam('Team 1');
@@ -42,7 +42,7 @@ class ScheduleBuilderTest extends TestCase
         $this->assertEquals(['Team 1', 'Team 2', 'Team 3'], $teams1);
     }
 
-    public function testTeamRemoval()
+    public function testTeamRemoval(): void
     {
         $scheduleBuilder = new ScheduleBuilder();
         $scheduleBuilder->addTeam('Team 1');
@@ -54,22 +54,22 @@ class ScheduleBuilderTest extends TestCase
         $this->assertEquals(['Team 1', 'Team 3'], $teams1);
     }
 
-    public function testInvalidTeamRemoval()
+    public function testInvalidTeamRemoval(): void
     {
         $scheduleBuilder = new ScheduleBuilder();
         try {
             $scheduleBuilder->removeTeam('Team 1');
             $this->fail('Removal of nonexistent team failed to throw an exception.');
-        } catch (Exception $e) {}
+        } catch (Exception) {}
         $scheduleBuilder->addTeam('Team 1');
         try {
             $scheduleBuilder->removeTeam('Team 2');
             $this->fail('Removal of nonexistent team failed to throw an exception.');
-        } catch (Exception $e) {}
+        } catch (Exception) {}
         $this->assertTrue(true);
     }
 
-    public function testRounds()
+    public function testRounds(): void
     {
         $scheduleBuilder = new ScheduleBuilder();
         $scheduleBuilder->setRounds(14);
@@ -77,14 +77,14 @@ class ScheduleBuilderTest extends TestCase
         $this->assertCount(14, $scheduleBuilder->build());
     }
 
-    public function testRoundDefaultBehavior()
+    public function testRoundDefaultBehavior(): void
     {
         $scheduleBuilder = new ScheduleBuilder();
         $scheduleBuilder->setTeams(['Team 1', 'Team 2', 'Team 3', 'Team 4']);
         $this->assertCount(3, $scheduleBuilder->build());
     }
 
-    public function testEnoughRounds()
+    public function testEnoughRounds(): void
     {
         $scheduleBuilder = new ScheduleBuilder();
         $scheduleBuilder->setTeams(['Team 1', 'Team 2', 'Team 3', 'Team 4']);
@@ -93,7 +93,7 @@ class ScheduleBuilderTest extends TestCase
         $this->assertCount(3, $scheduleBuilder->build());
     }
 
-    public function testNullRounds()
+    public function testNullRounds(): void
     {
         $scheduleBuilder = new ScheduleBuilder();
         $scheduleBuilder->setTeams(['Team 1', 'Team 2', 'Team 3', 'Team 4']);
@@ -101,7 +101,7 @@ class ScheduleBuilderTest extends TestCase
         $this->assertCount(3, $scheduleBuilder->build());
     }
 
-    public function testTeamSetting()
+    public function testTeamSetting(): void
     {
         $scheduleBuilder = new ScheduleBuilder();
         $scheduleBuilder->setTeams(['Team 1', 'Team 2']);

@@ -27,5 +27,5 @@
  * SOFTWARE.
  */
 
-require_once 'functions/rotate.php';
-require_once 'functions/make_schedule.php';
+require_once __DIR__ . '/functions/rotate.php';
+require_once __DIR__ . '/functions/make_schedule.php';

@@ -1,8 +1,8 @@
 <?php
 
-include '../src/round-robin.php';
+include __DIR__ . '/../src/round-robin.php';
 
-function debug_rotate_print(array $array)
+function debug_rotate_print(array $array): void
 {
     $count = count($array);
     $even = $count % 2 === 0;
@@ -16,11 +16,12 @@ function debug_rotate_print(array $array)
     }
 }
 
-function debug_rotate_print_full_rotation(array $array, $headers = true)
+function debug_rotate_print_full_rotation(array $array, $headers = true): void
 {
     echo $headers ? 'Initial'.PHP_EOL : PHP_EOL;
     debug_rotate_print($array);
-    for($i = 1; $i < count($array); $i++) {
+    $counter = count($array);
+    for($i = 1; $i < $counter; $i++) {
         echo $headers ? 'Rotation '.$i.PHP_EOL : PHP_EOL;
         rotate($array);
         debug_rotate_print($array);

@@ -48,20 +48,20 @@
  *     one of these elements as null to signify a bye for the other actual team 
  *     element in the matchup array
  */
-function make_schedule(array $teams, int $rounds = null, bool $shuffle = true, int $seed = null): array
+function make_schedule(array $teams, ?int $rounds = null, bool $shuffle = true, ?int $seed = null): array
 {
     $teamCount = count($teams);
     if($teamCount < 2) {
         return [];
     }
     //Account for odd number of teams by adding a bye
-    if($teamCount % 2 === 1) {
-        array_push($teams, null);
+    if ($teamCount % 2 === 1) {
+        $teams[] = null;
         $teamCount += 1;
     }
     if($shuffle) {
         //Seed shuffle with random_int for better randomness if seed is null
-        srand($seed ?? random_int(PHP_INT_MIN, PHP_INT_MAX));
+        mt_srand($seed ?? random_int(PHP_INT_MIN, PHP_INT_MAX));
         shuffle($teams);
     } elseif(!is_null($seed)) {
         //Generate friendly notice that seed is set but shuffle is set to false
@@ -94,7 +94,7 @@ function make_schedule(array $teams, int $rounds = null, bool $shuffle = true, i
  * @see make_schedule
  *
  */
-function schedule(array $teams, int $rounds = null, bool $shuffle = true, int $seed = null): array
+function schedule(array $teams, ?int $rounds = null, bool $shuffle = true, ?int $seed = null): array
 {
     return make_schedule($teams, $rounds, $shuffle, $seed);
 }

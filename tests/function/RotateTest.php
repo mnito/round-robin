@@ -4,28 +4,28 @@ use \PHPUnit\Framework\TestCase;
 
 class RotateTest extends TestCase
 {
-    public function testZeroElementRotation()
+    public function testZeroElementRotation(): void
     {
         $zero = [];
         rotate($zero);
         $this->assertEquals([], $zero);
     }
 
-    public function testOneElementRotation()
+    public function testOneElementRotation(): void
     {
         $one = [1];
         rotate($one);
         $this->assertEquals([1], $one);
     }
 
-    public function testTwoElementRotation()
+    public function testTwoElementRotation(): void
     {
         $two = [1, 2];
         rotate($two);
         $this->assertEquals([1, 2], $two);
     }
 
-    public function testThreeElementRotation()
+    public function testThreeElementRotation(): void
     {
         $three = [1, 2, 3];
         rotate($three);
@@ -34,7 +34,7 @@ class RotateTest extends TestCase
         $this->assertEquals([1, 2, 3], $three);
     }
 
-    public function testFourElementRotation()
+    public function testFourElementRotation(): void
     {
         $even = [
             1, 2,
@@ -60,7 +60,7 @@ class RotateTest extends TestCase
         }
     }
 
-    public function testArbitraryEvenNumberElementRotation()
+    public function testArbitraryEvenNumberElementRotation(): void
     {
         $even = [
             0, 1, 2, 3, 4,
@@ -110,7 +110,7 @@ class RotateTest extends TestCase
         }
     }
 
-    public function testArbitraryOddNumberElementRotation()
+    public function testArbitraryOddNumberElementRotation(): void
     {
         $odd = [
             1, 2, 3, 4, 5,
