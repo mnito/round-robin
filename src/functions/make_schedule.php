@@ -48,7 +48,7 @@
  *     one of these elements as null to signify a bye for the other actual team 
  *     element in the matchup array
  */
-function make_schedule(array $teams, int $rounds = null, bool $shuffle = true, int $seed = null): array
+function make_schedule(array $teams, ?int $rounds = null, bool $shuffle = true, ?int $seed = null): array
 {
     $teamCount = count($teams);
     if($teamCount < 2) {
@@ -94,7 +94,7 @@ function make_schedule(array $teams, int $rounds = null, bool $shuffle = true, i
  * @see make_schedule
  *
  */
-function schedule(array $teams, int $rounds = null, bool $shuffle = true, int $seed = null): array
+function schedule(array $teams, ?int $rounds = null, bool $shuffle = true, ?int $seed = null): array
 {
     return make_schedule($teams, $rounds, $shuffle, $seed);
 }

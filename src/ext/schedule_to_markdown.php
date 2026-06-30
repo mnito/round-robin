@@ -40,7 +40,7 @@ const MARKDOWN_EOL = PHP_EOL;
  *
  * @return string The formatted schedule in Markdown
  */
-function schedule_to_markdown(Schedule $schedule, string $name = null, string $description = null): string
+function schedule_to_markdown(Schedule $schedule, ?string $name = null, ?string $description = null): string
 {
     $s = "";
 
@@ -78,4 +78,3 @@ function schedule_to_markdown(Schedule $schedule, string $name = null, string $d
 
     return $s;
 }
-?>
