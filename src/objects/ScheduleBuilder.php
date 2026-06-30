@@ -58,7 +58,7 @@ class ScheduleBuilder
      * @param array $teams
      * @param int|null $rounds
      */
-    public function __construct(array $teams = [], int $rounds = null)
+    public function __construct(array $teams = [], ?int $rounds = null)
     {
         $this->setTeams($teams);
         $this->setRounds($rounds);
@@ -109,7 +109,7 @@ class ScheduleBuilder
      * @param int|null $rounds
      * @return void
      */
-    public function setRounds(int $rounds = null)
+    public function setRounds(?int $rounds = null)
     {
         $this->rounds = $rounds;
     }
@@ -130,7 +130,7 @@ class ScheduleBuilder
      * @param int|null $seed
      * @return void
      */
-    public function shuffle(int $seed = null)
+    public function shuffle(?int $seed = null)
     {
         $this->shuffle = true;
         $this->seed = $seed;

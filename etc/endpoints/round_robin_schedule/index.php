@@ -27,7 +27,7 @@ function _str_contains(string $s, $subs): bool
     return strpos($s, $subs) !== false;
 }
 
-function get_schedule(ServerRequestInterface $request, ResponseInterface $response = NULL): ResponseInterface
+function get_schedule(ServerRequestInterface $request, ?ResponseInterface $response = null): ResponseInterface
 {
     if (empty($response)) {
         $response = new \GuzzleHttp\Psr7\Response();
