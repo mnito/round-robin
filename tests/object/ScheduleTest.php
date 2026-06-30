@@ -41,8 +41,8 @@ class ScheduleTest extends TestCase
             foreach($matchups as $matchup) {
                 $team1 = $matchup[0];
                 $team2 = $matchup[1];
-                $teamSchedule[$team1][$round] = ['team' => $team2, 'home' => false];
-                $teamSchedule[$team2][$round] = ['team' => $team1, 'home' => true];
+                $teamSchedule[$team1 ?? ""][$round] = ['team' => $team2, 'home' => false];
+                $teamSchedule[$team2 ?? ""][$round] = ['team' => $team1, 'home' => true];
             }
         }
         $this->assertEquals($teamSchedule['Team 1'], $schedule->forTeam('Team 1'));
