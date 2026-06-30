@@ -1,5 +1,6 @@
 # round-robin
-[![Build Status](https://app.travis-ci.com/mnito/round-robin.svg)](https://app.travis-ci.com/mnito/round-robin)
+
+[![Run CI](https://github.com/mnito/round-robin/actions/workflows/ci.yaml/badge.svg)](https://github.com/mnito/round-robin/actions/workflows/ci.yaml)
 
 Round-robin schedule generation reference implementation for PHP 8 licensed under the MIT license
 
@@ -31,7 +32,6 @@ or
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
 $schedule = schedule($teams);
 ```
-
 
 #### Generate a random home-away schedule where each player meets every other player twice, once at home and once away, using the $rounds integer parameter:
 
@@ -67,12 +67,14 @@ $schedule = schedule($teams, null, false);
 ```
 
 #### Use your own seed with the $seed integer parameter for predetermined shuffling:
+
 ```php
 $teams = ['The 1st', '2 Good', 'We 3', '4ward'];
 $scheduleBuilder = new ScheduleBuilder($teams);
 $scheduleBuilder->shuffle(89);
 $schedule = $scheduleBuilder->build();
 ```
+
 or
 
 ```php
@@ -115,6 +117,7 @@ Loop through:
 ```
 
 #### Looping Through Team Schedules
+
 ```php
 <?php
 
