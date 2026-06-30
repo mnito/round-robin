@@ -86,8 +86,8 @@ class Schedule implements IteratorAggregate
             foreach($matchups as $matchup) {
                 $team1 = $matchup[0];
                 $team2 = $matchup[1];
-                $teamSchedule[$team1][$round] = ['team' => $team2, 'home' => false];
-                $teamSchedule[$team2][$round] = ['team' => $team1, 'home' => true];
+                $teamSchedule[$team1 ?? ""][$round] = ['team' => $team2, 'home' => false];
+                $teamSchedule[$team2 ?? ""][$round] = ['team' => $team1, 'home' => true];
             }
         }
         $this->team = $teamSchedule;
