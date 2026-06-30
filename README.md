@@ -1,7 +1,7 @@
 # round-robin
 [![Build Status](https://app.travis-ci.com/mnito/round-robin.svg)](https://app.travis-ci.com/mnito/round-robin)
 
-Round-robin schedule generation reference implementation for PHP 7 licensed under the MIT license
+Round-robin schedule generation reference implementation for PHP 8 licensed under the MIT license
 
 ## Features
 
@@ -11,7 +11,6 @@ Round-robin schedule generation reference implementation for PHP 7 licensed unde
 - Simple, concise implementation for easy analysis of the algorithm
 - Unit tested
 - Documented
-- Modern PHP 7 code
 - Object-oriented and procedural APIs
 
 ## Basic Usage
